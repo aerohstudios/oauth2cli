@@ -19,7 +19,6 @@ def parse_args():
     parser.add_argument('--scope', help='OAuth 2.0 request scope', required=True)
     parser.add_argument('--server', help='OAuth 2.0 server endpoint', required=True)
     parser.add_argument('--authorize_path', help="OAuth 2.0 server authorize path Default value: '/oauth/authorize'", default='/oauth/authorize')
-    parser.add_argument('--token_path', help="OAuth 2.0 server token path. Default value: '/oauth/token'", default='/oauth/token')
     parser.add_argument('--client_id', help='OAuth 2.0 Application Client ID')
     parser.add_argument('--client_secret', help='OAuth 2.0 Application Client Secret')
     parser.add_argument('--credentials_file', help='JSON file path with OAuth 2.0 Application Client ID & Secret')

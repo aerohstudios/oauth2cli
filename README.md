@@ -1,16 +1,16 @@
-# oauthcli
+# oauth2cli
 
-`oauthcli` is a developer productivity tool. It's helpful when juggling across multiple tech stacks and you need an OAuth `access_token` to make an API call, but you don't have a quick way to generate the `access_token`. Moreover, `oauthcli` uses standard python library and doesn't have any external dependencies.
+`oauth2cli` is a developer productivity tool. It's helpful when juggling across multiple tech stacks and you need an OAuth `access_token` to make an API call, but you don't have a quick way to generate the `access_token`. Moreover, `oauth2cli` uses standard python library and doesn't have any external dependencies.
 
 ## Installation
 
-You can install `oauthcli` using python `pip`.
+You can install `oauth2cli` using python `pip`.
 
 ```shell
-pip install oauthcli
+pip install oauth2cli
 ```
 
-**Please Note:** `oauthcli` runs a temporary local redirect server to capture authorization `code`, to generate `access_token`. To use this feature, you will have to modify `redirect_uri` to http://localhost:62884 for your application on the OAuth 2.0 server. You are not able to make this change then please [create a issue](https://github.com/aerohstudios/oauthcli/issues).
+**Please Note:** `oauth2cli` runs a temporary local redirect server to capture authorization `code`, to generate `access_token`. To use this feature, you will have to modify `redirect_uri` to http://localhost:62884 for your application on the OAuth 2.0 server. You are not able to make this change then please [create a issue](https://github.com/aerohstudios/oauth2cli/issues).
 
 ## Screenshots
 
@@ -69,7 +69,7 @@ temporary port for client to receive authorization code. Default port is 62884. 
 Retrieve OAuth Access Token with the Client ID and Secret over command line. (less secure)
 
 ```shell
-oauthcli --scope mobile \
+oauth2cli --scope mobile \
 --server http://localhost:3000/oauth/authorize \
 --client_id=xQIGh0SbhoZPVJWbRud4ZH4ExAx6dfi86UEpV6zoOi \
 --client_secret=qJ8IWyzqcJ6WTlZC5B5iKIlwpKoflbcL8YbpMESWHxM
@@ -80,7 +80,7 @@ oauthcli --scope mobile \
 Retrieve Oauth Access Token with client_id and client_secret stored in JSON file.
 
 ```shell
-oauthcli --scope mobile \
+oauth2cli --scope mobile \
 --server http://localhost:3000/oauth/authorize \
 --credentials_file=/tmp/oauth_app_credentails.json
 ```
@@ -97,7 +97,7 @@ JSON file format
 ### Custom URL Endpoints
 
 ```shell
-oauthcli --scope mobile \
+oauth2cli --scope mobile \
 --server http://localhost:3000/oauth/authorize \
 --credentials_file=/tmp/oauth_app_credentails.json \
 --authorize_path=/oauth2/authorize \
@@ -106,6 +106,6 @@ oauthcli --scope mobile \
 
 ## Contributing
 
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/aerohstudios/oauthcli/issues)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/aerohstudios/oauth2cli/issues)
 
 We hope this tool is helpful for the community, and we'd love to hear how it helped solve your problem! If you want to contribute to this project by adding features or updating documentation, please create a pull request.
