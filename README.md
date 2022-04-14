@@ -33,11 +33,11 @@ show this help message and exit
 
 
 `--scope SCOPE`
-OAuth 2.0 request scope
+OAuth 2.0 request scope. (Required)
 
 
 `--server SERVER`
-OAuth 2.0 server endpoint
+OAuth 2.0 server endpoint. (Required)
 
 
 `--authorize_path AUTHORIZE_PATH`

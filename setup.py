@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-version = '1.0.1'
+version = open('oauth2cli/VERSION').read().strip()
 
 setup(
     name='oauth2cli',
@@ -21,6 +21,8 @@ setup(
         ]},
     long_description=open('README.rst').read(),
     install_requires=[],
+    package_data={'oauth2cli': ['VERSION']},
+    include_package_data=True,
     classifiers=[
         # Supported classifiers: http://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 4 - Beta',

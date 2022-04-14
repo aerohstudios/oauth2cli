@@ -6,6 +6,7 @@ from urllib.request import Request, urlopen
 import socketserver
 import json
 import webbrowser
+import os
 
 schemeIndex = 0
 locationIndex = 1
@@ -16,14 +17,17 @@ fragmentIndex = 4
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Generic OAuth 2.0 command line utility to retrive access tokens.")
-    parser.add_argument('--scope', help='OAuth 2.0 request scope', required=True)
-    parser.add_argument('--server', help='OAuth 2.0 server endpoint', required=True)
+    parser.add_argument('--scope', help='OAuth 2.0 request scope. (Required)', required=True)
+    parser.add_argument('--server', help='OAuth 2.0 server endpoint. (Required)', required=True)
     parser.add_argument('--authorize_path', help="OAuth 2.0 server authorize path Default value: '/oauth/authorize'", default='/oauth/authorize')
     parser.add_argument('--token_path', help="OAuth 2.0 server token path Default value: '/oauth/token'", default='/oauth/token')
     parser.add_argument('--client_id', help='OAuth 2.0 Application Client ID')
     parser.add_argument('--client_secret', help='OAuth 2.0 Application Client Secret')
     parser.add_argument('--credentials_file', help='JSON file path with OAuth 2.0 Application Client ID & Secret')
     parser.add_argument('--client_port', help="temporary port for client to receive authorization code. Default port is 62884.\nConfigure OAuth 2.0 server to use http://localhost:<client_port> as redirect uri.", default=62884)
+
+    version = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'VERSION')).read().strip()
+    parser.add_argument('--version', action='version', version='%(prog)s v{}'.format(version), help="Show oauth2cli version")
 
     global args
     args = parser.parse_args()
