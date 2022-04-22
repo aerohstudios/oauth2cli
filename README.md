@@ -10,7 +10,7 @@ You can install `oauth2cli` using python `pip`.
 pip install oauth2cli
 ```
 
-**Please Note:** `oauth2cli` runs a temporary local redirect server to capture authorization `code`, to generate `access_token`. To use this feature, you will have to modify `redirect_uri` to http://localhost:62884 for your application on the OAuth 2.0 server. You are not able to make this change then please [create a issue](https://github.com/aerohstudios/oauth2cli/issues).
+**Please Note:** `oauth2cli` runs a temporary local web server for hosting `redirect_uri` to capture authorization `code`, to generate `access_token`. To use this feature, you will have to modify `redirect_uri` to http://localhost:62884 for your application on the OAuth 2.0 server. If you can't change the `redirect_uri` on the OAuth 2.0 server, or if your OAuth 2.0 doesn't allow localhost or non-SSL `redirect_uri`, then you should use the `--redirect_uri` option for `oauth2cli`. When you use `--redirect_uri` option, you will be able to manually copy authorization `code` from web browser and paste it on the command line to retrieve `access_token`.
 
 ## Screenshots
 
@@ -58,6 +58,9 @@ OAuth 2.0 Application Client Secret
 
 `--credentials_file CREDENTIALS_FILE`
 JSON file path with OAuth 2.0 Application Client ID & Secret
+
+`--redirect_uri REDIRECT_URI`
+Override Redirect URI. Use it if your OAuth 2.0 Server doesn't support non-ssl/localhost URIs in the redirect URL. You will be able to manually copy authorization code from the web browser and paste it on command line with this option.
 
 `--client_port CLIENT_PORT`
 temporary port for client to receive authorization code. Default port is 62884. Configure OAuth 2.0 server to use http://localhost:<client_port> as redirect uri.

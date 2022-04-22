@@ -24,6 +24,7 @@ def parse_args():
     parser.add_argument('--client_id', help='OAuth 2.0 Application Client ID')
     parser.add_argument('--client_secret', help='OAuth 2.0 Application Client Secret')
     parser.add_argument('--credentials_file', help='JSON file path with OAuth 2.0 Application Client ID & Secret')
+    parser.add_argument('--redirect_uri', help="Override Redirect URI. Use it if your OAuth 2.0 Server doesn't support non-ssl/localhost URIs in the redirect URL.\nYou will be able to manually copy authorization code from the web browser and paste it on command line with this option.")
     parser.add_argument('--client_port', help="temporary port for client to receive authorization code. Default port is 62884.\nConfigure OAuth 2.0 server to use http://localhost:<client_port> as redirect uri.", default=62884)
 
     version = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'VERSION')).read().strip()
@@ -53,7 +54,12 @@ def print_and_http_write(handler, message):
     handler.write(message.encode())
 
 def get_redirect_uri():
-    return "http://localhost:{}".format(args.client_port)
+    if args.redirect_uri:
+        print("using redirect_uri from options")
+        return args.redirect_uri
+    else:
+        print("using redirect_uri localhost")
+        return "http://localhost:{}".format(args.client_port)
 
 class OAuthRedirectHandler(socketserver.StreamRequestHandler):
     def handle(self):
@@ -75,10 +81,7 @@ class OAuthRedirectHandler(socketserver.StreamRequestHandler):
 
             print_and_http_write(self.wfile, "Retriving Access Token...\n")
 
-            token_url = create_token_url(code)
-            request = Request(token_url, method='POST')
-            response = urlopen(request)
-            response_dict = json.loads(response.read().decode("utf-8"))
+            response_dict = process_code(code)
 
             print_and_http_write(self.wfile, "\nGot Access Token\n")
 
@@ -86,6 +89,12 @@ class OAuthRedirectHandler(socketserver.StreamRequestHandler):
                 print_and_http_write(self.wfile, "{0} = {1}\n".format(key, response_dict[key]))
         else:
             print_and_http_write(self.wfile, "Failed!\ncode not found in the request!\n")
+
+def process_code(code):
+    token_url = create_token_url(code)
+    request = Request(token_url, method='POST')
+    response = urlopen(request)
+    return json.loads(response.read().decode("utf-8"))
 
 def create_authorize_url():
     print("Generating Authorize URL...")
@@ -139,4 +148,13 @@ def run_oauth_redirect_server():
 def main():
     parse_args()
     create_authorize_url()
-    run_oauth_redirect_server()
+    if args.redirect_uri:
+        code = input('Copy the Authorization Code from the web browser, paste it here and press ENTER: ')
+        response_dict = process_code(code)
+        for key in response_dict.keys():
+            print("{0} = {1}".format(key, response_dict[key]))
+    else:
+        run_oauth_redirect_server()
+
+if __name__ == "__main__":
+    main()
