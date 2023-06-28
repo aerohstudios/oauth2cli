@@ -12,6 +12,48 @@ pip install oauth2cli
 
 **Please Note:** `oauth2cli` runs a temporary local web server for hosting `redirect_uri` to capture authorization `code`, to generate `access_token`. To use this feature, you will have to modify `redirect_uri` to http://localhost:62884 for your application on the OAuth 2.0 server. If you can't change the `redirect_uri` on the OAuth 2.0 server, or if your OAuth 2.0 doesn't allow localhost or non-SSL `redirect_uri`, then you should use the `--redirect_uri` option for `oauth2cli`. When you use `--redirect_uri` option, you will be able to manually copy authorization `code` from web browser and paste it on the command line to retrieve `access_token`.
 
+## Examples
+
+### Quick & Dirty
+
+Retrieve OAuth Access Token with the Client ID and Secret over command line. (less secure)
+
+```shell
+oauth2cli --scope mobile \
+--server http://localhost:3000/oauth/authorize \
+--client_id=xQIGh0SbhoZPVJWbRud4ZH4ExAx6dfi86UEpV6zoOi \
+--client_secret=qJ8IWyzqcJ6WTlZC5B5iKIlwpKoflbcL8YbpMESWHxM
+```
+
+### Client ID & Secret from file
+
+Retrieve Oauth Access Token with client_id and client_secret stored in JSON file.
+
+```shell
+oauth2cli --scope mobile \
+--server http://localhost:3000/oauth/authorize \
+--credentials_file=/tmp/oauth_app_credentails.json
+```
+
+JSON file format
+
+```json
+{
+  "client_id": "xQIGh0SbhoZPVJWbRud4ZH4ExAx6dfi86UEpV6zoOis",
+  "client_secret": "qJ8IWyzqcJ6WTlZC5B5iKIlwpKoflbcL8YbpMESWHxM"
+}
+```
+
+### Custom URL Endpoints
+
+```shell
+oauth2cli --scope mobile \
+--server http://localhost:3000/oauth/authorize \
+--credentials_file=/tmp/oauth_app_credentails.json \
+--authorize_path=/oauth2/authorize \
+--token_path=/oauth2/token
+```
+
 ## Screenshots
 
 Terminal Output
@@ -64,48 +106,6 @@ Override Redirect URI. Use it if your OAuth 2.0 Server doesn't support non-ssl/l
 
 `--client_port CLIENT_PORT`
 temporary port for client to receive authorization code. Default port is 62884. Configure OAuth 2.0 server to use http://localhost:<client_port> as redirect uri.
-
-## Examples
-
-### Quick & Dirty
-
-Retrieve OAuth Access Token with the Client ID and Secret over command line. (less secure)
-
-```shell
-oauth2cli --scope mobile \
---server http://localhost:3000/oauth/authorize \
---client_id=xQIGh0SbhoZPVJWbRud4ZH4ExAx6dfi86UEpV6zoOi \
---client_secret=qJ8IWyzqcJ6WTlZC5B5iKIlwpKoflbcL8YbpMESWHxM
-```
-
-### Client ID & Secret from file
-
-Retrieve Oauth Access Token with client_id and client_secret stored in JSON file.
-
-```shell
-oauth2cli --scope mobile \
---server http://localhost:3000/oauth/authorize \
---credentials_file=/tmp/oauth_app_credentails.json
-```
-
-JSON file format
-
-```json
-{
-  "client_id": "xQIGh0SbhoZPVJWbRud4ZH4ExAx6dfi86UEpV6zoOis",
-  "client_secret": "qJ8IWyzqcJ6WTlZC5B5iKIlwpKoflbcL8YbpMESWHxM"
-}
-```
-
-### Custom URL Endpoints
-
-```shell
-oauth2cli --scope mobile \
---server http://localhost:3000/oauth/authorize \
---credentials_file=/tmp/oauth_app_credentails.json \
---authorize_path=/oauth2/authorize \
---token_path=/oauth2/token
-```
 
 ## Contributing
 
